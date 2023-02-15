@@ -16,7 +16,7 @@ import {
 	useAppDispatch,
 	useAppSelector,
 } from "./appStore";
-import { USER_CLIENT } from "./appStore/axiosInstance";
+import { PROGRAM_CLIENT, USER_CLIENT } from "./appStore/axiosInstance";
 import {
 	ADMIN_ROUTE,
 	FULFILLED,
@@ -32,10 +32,10 @@ function App() {
 	useEffect(() => {
 		if (accessToken) {
 			USER_CLIENT.defaults.headers.common["Authorization"] = accessToken;
-			// PROGRAM_CLIENT.defaults.headers.common["Authorization"] = accessToken;
+			PROGRAM_CLIENT.defaults.headers.common["Authorization"] = accessToken;
 		} else {
 			delete USER_CLIENT.defaults.headers.common["Authorization"];
-			// delete PROGRAM_CLIENT.defaults.headers.common["Authorization"];
+			delete PROGRAM_CLIENT.defaults.headers.common["Authorization"];
 		}
 	}, [accessToken]);
 	/***************************************** */

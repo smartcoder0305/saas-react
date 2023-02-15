@@ -49,7 +49,7 @@ const Workflow = (): JSX.Element => {
 	]);
 	const [workFlowDataList] = useState(useAppSelector(selectedWorkFlowData));
 	const [stage, setStage] = useState<workStageType[]>(
-		workFlowDataList.data.attributes.stages
+		workFlowDataList?.data?.attributes?.stages
 	);
 	const [workFlowData, setWorkFlowData] = useState<workStageType>({
 		id: programId,

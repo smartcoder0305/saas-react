@@ -1,12 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
-import {
-	StageType,
-	workFlowType,
-	WorkflowType,
-	workStageType,
-} from "../../../types";
-import { WORKFLOW_CLIENT } from "../../axiosInstance";
+import { WorkflowType, workStageType } from "../../../types";
+import { PROGRAM_CLIENT, WORKFLOW_CLIENT } from "../../axiosInstance";
 
 export const getAllWorkflows = createAsyncThunk("workflow/getAll", async () => {
 	try {
@@ -27,7 +22,7 @@ export const getSelectedWorkFlow = createAsyncThunk(
 	"workflow/getSelectedWorkFlow",
 	async (data: { programId: string }) => {
 		try {
-			const response = await WORKFLOW_CLIENT.get(
+			const response = await PROGRAM_CLIENT.get(
 				`programs/${data.programId}/workflow`,
 				{
 					headers: {

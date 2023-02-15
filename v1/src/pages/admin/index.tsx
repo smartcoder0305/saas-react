@@ -14,6 +14,7 @@ import {
 } from "../../appStore";
 import ForgotPassword from "../ForgotPassword";
 import ResetPassword from "../ResetPassword";
+import NotFound from "../NotFound";
 
 type AdminProps = {
   adjustBasename: (arg: string) => void;
@@ -64,6 +65,8 @@ const Admin = ({ adjustBasename }: AdminProps) => {
           }
         ></Route>
       </Route>
+      {/** 404 page */}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

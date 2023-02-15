@@ -41,13 +41,16 @@ const ResetPassword = () => {
       addNewAlert(dispatch, {
         type: "success",
         title: "Reset passowrd",
-        msg: "Successfly reset",
+        msg: "Successfully reset",
       });
     } else if (action.meta.requestStatus === "rejected") {
       addNewAlert(dispatch, {
         type: "error",
         title: "Reset password",
-        msg: "Error occured while resetting password",
+        msg:
+          typeof action.payload === "string"
+            ? action.payload
+            : "Error occured while resetting password",
       });
     }
   };

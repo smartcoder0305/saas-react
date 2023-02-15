@@ -66,7 +66,7 @@ const Login = () => {
   return (
     <AuthPageLayout title="Sign in - Admin">
       <Typography variant="h1" component="h1" sx={{ mb: 3 }}>
-        Sign In as an Admin
+        Sign In
       </Typography>
 
       <form action="" onSubmit={handleSubmit}>
@@ -127,7 +127,7 @@ const Login = () => {
           variant="contained"
           size="large"
           fullWidth
-          sx={{ mt: 3, py: 3 }}
+          sx={{ mt: 3, py: 3, color: "white", fontWeight: "bold" }}
           type="submit"
           color="success"
         >

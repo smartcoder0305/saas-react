@@ -25,6 +25,9 @@ const RouteSwitcher = ({
   const isVerified = useAppSelector(selectIsVerified);
   const currentRole = useAppSelector(selectCurrentRole);
   const fullProviderInfo = useAppSelector(selectFullProviderInfo);
+  console.log("isAuthenticated", isAuthenticated);
+  console.log("isVerified", isVerified);
+  console.log("currentRole", currentRole);
   if (!verifying && isAuthenticated === requireLogin) {
     return <Component />;
   }
@@ -32,8 +35,10 @@ const RouteSwitcher = ({
   if (isAuthenticated) {
     if (!isVerified) {
       if (verifying) {
+        console.log("gets here in isAuthenticated->!isVerified->verifying");
         return <Component />;
       }
+      console.log("gets here in isAuthenticated->isVerified");
       return <Navigate to="/verify-email" />;
     }
     if (fullProviderInfo === null) {

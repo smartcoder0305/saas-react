@@ -12,6 +12,7 @@ import { selectCurrentRole, useAppSelector } from "../../appStore";
 import NotFound from "../NotFound";
 import { ADMIN, PROVIDER } from "../../types";
 import EmployerDashboard from "../employer/dashboard";
+import InviteClient from "./auth/InivteClient";
 
 /**
  * Base Program Provider component.
@@ -32,10 +33,14 @@ const ProgramProvider = () => {
       <Route index element={<Navigate to="/provider/signup" />} />
       <Route path="/signup" element={<RouteSwitcher component={Signup} />} />
       <Route
-        path="/invite-coworker"
+        path="/invite-coworker/:programId"
         element={
           <RouteSwitcher requireLogin={true} component={InviteCoworker} />
         }
+      />
+      <Route
+        path="/invite-client"
+        element={<RouteSwitcher requireLogin={true} component={InviteClient} />}
       />
       <Route path="/dashboard">
         <Route

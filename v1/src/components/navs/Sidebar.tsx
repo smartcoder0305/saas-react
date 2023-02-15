@@ -61,13 +61,22 @@ const Sidebar = (props: Props) => {
         <img src={HomeIconPrimary} width="20" height="20" />
       </Button>
       {currentPersona === PROVIDER && (
-        <Button
-          onClick={() => navigate("/provider/invite-coworker")}
-          sx={{ fontSize: "12px", padding: "initial", height: "70px" }}
-          fullWidth
-        >
-          Invite Corworker
-        </Button>
+        <>
+          <Button
+            onClick={() => navigate("/provider/invite-coworker")}
+            sx={{ fontSize: "12px", padding: "initial", height: "70px" }}
+            fullWidth
+          >
+            Invite Corworker
+          </Button>
+          <Button
+            onClick={() => navigate("/provider/invite-client")}
+            sx={{ fontSize: "12px", padding: "initial", height: "70px" }}
+            fullWidth
+          >
+            Invite Client
+          </Button>
+        </>
       )}
       {currentPersona === ADMIN && (
         <>

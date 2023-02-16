@@ -518,9 +518,9 @@ export const EMPLOYER = "Employer";
 export const PROVIDER = "Provider";
 export const ADMIN = "Admin";
 export const OWNER = "Owner";
-export const CONTRIBUTOR = "Candidate";
-export const GUEST = "Candidate";
-export const NONE = "Candidate";
+export const CONTRIBUTOR = "Contributor";
+export const GUEST = "Guest";
+export const NONE = "None";
 
 export const LOADING = "loading";
 export const NOT_FOUND = "not_found";

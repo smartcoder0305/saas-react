@@ -33,7 +33,7 @@ const ProgramProvider = () => {
       <Route index element={<Navigate to="/provider/signup" />} />
       <Route path="/signup" element={<RouteSwitcher component={Signup} />} />
       <Route
-        path="/invite-coworker/:programId"
+        path="/invite-coworker/:programId?"
         element={
           <RouteSwitcher requireLogin={true} component={InviteCoworker} />
         }

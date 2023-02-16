@@ -22,6 +22,7 @@ import {
 } from "../../../appStore";
 import { addNewAlert } from "../../../utils/functions/addNewAlert";
 import { CONTRIBUTOR, GUEST, OWNER } from "../../../types";
+import { useParams } from "react-router-dom";
 
 /**
  * InviteCoworker component for program providers
@@ -30,10 +31,12 @@ import { CONTRIBUTOR, GUEST, OWNER } from "../../../types";
 const InviteCoworker = () => {
   const dispatch = useAppDispatch();
   const accounts = useAppSelector(selectProviderMemberAccounts);
+  const { programId } = useParams();
   const [memberAccounts, setMemberAccounts] = useState(accounts);
   const [formData, setFormData] = useState({
     email: "",
-    userPermission: "",
+    userPermission: programId ? CONTRIBUTOR : OWNER,
+    programId: programId ?? "",
   });
   useEffect(() => {
     dispatch(providerGetMemberAccounts());
@@ -41,6 +44,13 @@ const InviteCoworker = () => {
   useEffect(() => {
     setMemberAccounts(accounts);
   }, [accounts]);
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      programId: programId ?? "",
+      userPermission: programId ? CONTRIBUTOR : OWNER,
+    });
+  }, [programId]);
   const { email, userPermission } = formData;
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = ev.target;
@@ -53,7 +63,11 @@ const InviteCoworker = () => {
   const handleSubmit = async (ev: React.SyntheticEvent) => {
     ev.preventDefault();
     const action = await dispatch(
-      inviteCoworker({ email, role: userPermission })
+      inviteCoworker({
+        email: formData.email,
+        programId: formData.programId,
+        role: formData.userPermission,
+      })
     );
     if (action.meta.requestStatus === "fulfilled") {
       addNewAlert(dispatch, {
@@ -95,17 +109,26 @@ const InviteCoworker = () => {
             </FormControl>
             <FormControl fullWidth>
               <label>{"User permission"}</label>
-              <Select
-                variant="standard"
-                value={userPermission}
-                onChange={handleUserPermissionChange}
-              >
-                <MenuItem value={OWNER}>{"Super Admin / Manager"}</MenuItem>
-                <MenuItem value={CONTRIBUTOR}>
-                  {"Standard user / Assistant"}
-                </MenuItem>
-                <MenuItem value={GUEST}>{"Read-only access"}</MenuItem>
-              </Select>
+              {programId ? (
+                <Select
+                  variant="standard"
+                  value={userPermission}
+                  onChange={handleUserPermissionChange}
+                >
+                  <MenuItem value={CONTRIBUTOR}>
+                    {"Standard user / Assistant"}
+                  </MenuItem>
+                  <MenuItem value={GUEST}>{"Read-only access"}</MenuItem>
+                </Select>
+              ) : (
+                <Select
+                  variant="standard"
+                  value={userPermission}
+                  onChange={handleUserPermissionChange}
+                >
+                  <MenuItem value={OWNER}>{"Super Admin / Manager"}</MenuItem>
+                </Select>
+              )}
             </FormControl>
 
             <Button
@@ -139,7 +162,7 @@ const InviteCoworker = () => {
                       color="error"
                       sx={{ color: "#A80000" }}
                     >
-                      Delete question
+                      Delete
                     </Button>
                     <Button
                       variant="text"

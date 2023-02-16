@@ -13,9 +13,9 @@ export const getProviderInfo = createAsyncThunk(
       return res.data;
     } catch (err: any) {
       console.error("provider get provider info error", err);
-      if (err.response.status === 401) {
-        dispatch(refreshAccessToken());
-      }
+      // if (err.response.status === 401) {
+      //   dispatch(refreshAccessToken());
+      // }
       return rejectWithValue(err.response.data);
     }
   }

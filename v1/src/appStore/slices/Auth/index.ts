@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import {
   authLogin,
   authLogout,
@@ -6,6 +6,7 @@ import {
   setRole,
   setCurrentRoleIndexTo,
   verifyEmail,
+  refreshAccessToken,
 } from "..";
 import { ADMIN, OWNER, ProviderType } from "../../../types";
 
@@ -48,22 +49,13 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(authLogin.fulfilled, (state, action) => {
-        let incomingState: AuthProps = action.payload as unknown as AuthProps;
-        incomingState.account.currentRole = 0;
-        incomingState.account.emailVerified = true;
-        return { ...state, ...incomingState };
-      })
       .addCase(authLogout.fulfilled, (state, action) => {
         return initialState;
       })
       .addCase(setRole.fulfilled, (state, action) => {
-        console.log("state", state);
-        console.log("action.payload", action.payload);
         const tempState = { ...state.account };
         tempState.currentRole = 0;
         tempState.roles = [{ role: OWNER, persona: action.payload }];
-        console.log("tempState", tempState);
         return { ...state, account: { ...tempState } };
       })
       .addCase(verifyEmail.fulfilled, (state, action) => {
@@ -89,7 +81,15 @@ const authSlice = createSlice({
             currentRole: action.payload,
           },
         };
-      });
+      })
+      .addMatcher(
+        isAnyOf(authLogin.fulfilled, refreshAccessToken.fulfilled),
+        (state, action) => {
+          const incomingState = action.payload as AuthProps;
+          incomingState.account.currentRole = 0;
+          return { ...state, ...incomingState };
+        }
+      );
   },
 });
 

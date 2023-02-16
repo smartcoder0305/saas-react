@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import {
-  selectFullProviderInfo,
+  selectProviderInfo,
   selectCurrentRole,
   selectIsAuthenticated,
   useAppSelector,
@@ -24,10 +24,7 @@ const RouteSwitcher = ({
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const isVerified = useAppSelector(selectIsVerified);
   const currentRole = useAppSelector(selectCurrentRole);
-  const fullProviderInfo = useAppSelector(selectFullProviderInfo);
-  console.log("isAuthenticated", isAuthenticated);
-  console.log("isVerified", isVerified);
-  console.log("currentRole", currentRole);
+  const providerInfo = useAppSelector(selectProviderInfo);
   if (!verifying && isAuthenticated === requireLogin) {
     return <Component />;
   }
@@ -41,7 +38,7 @@ const RouteSwitcher = ({
       console.log("gets here in isAuthenticated->isVerified");
       return <Navigate to="/verify-email" />;
     }
-    if (fullProviderInfo === null) {
+    if (providerInfo === null) {
       return <Navigate to={`/dashboard`} />;
     } else {
       let subRoute = currentRole.persona;

@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { ProgramProviderSignupType } from "../../../types";
 import { USER_CLIENT } from "../../axiosInstance";
+import { refreshAccessToken } from "../Auth/thunks";
 
 export const programProviderLogin = createAsyncThunk(
   "programProvider/login",
@@ -96,7 +97,10 @@ export const verifyProviderInviteCode = createAsyncThunk(
 
 export const inviteProviderCoworker = createAsyncThunk(
   "programProvider/inviteCoworker",
-  async (formData: { email: string; role: string }, { rejectWithValue }) => {
+  async (
+    formData: { email: string; role: string; programId: string },
+    { rejectWithValue }
+  ) => {
     try {
       console.log(USER_CLIENT.defaults.headers);
       const res = await USER_CLIENT.post("/providers/invite", formData);
@@ -126,12 +130,15 @@ export const getProgramProviderProfile = createAsyncThunk(
 
 export const providerGetMemberAccounts = createAsyncThunk(
   "provider/getMemberAccounts",
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, dispatch }) => {
     try {
       const res = await USER_CLIENT.get("providers/accounts");
       return res.data;
     } catch (err: any) {
       console.error("provider get member in account error", err);
+      // if (err.response.status === 401) {
+      //   dispatch(refreshAccessToken());
+      // }
       return rejectWithValue(err.response.data);
     }
   }

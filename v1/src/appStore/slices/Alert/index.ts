@@ -1,6 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { AlertProps } from "../../../types";
-import { addAlert, removeAlert } from "..";
+import {
+  addAlert,
+  authLogin,
+  authLogout,
+  getProviderInfo,
+  removeAlert,
+} from "..";
 
 type AlertType = AlertProps & {
   id: string;
@@ -23,7 +29,17 @@ const alertSlice = createSlice({
       })
       .addCase(removeAlert.fulfilled, (state, action) => {
         return [...state.filter((alert) => alert.id !== action.payload)];
-      });
+      })
+      .addMatcher(
+        isAnyOf(
+          authLogin.fulfilled,
+          authLogout.fulfilled,
+          getProviderInfo.fulfilled
+        ),
+        (state, action) => {
+          return [];
+        }
+      );
   },
 });
 

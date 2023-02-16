@@ -11,11 +11,15 @@ export const authLogin = createAsyncThunk(
       password: string;
       providerId: string | null;
     },
-    { rejectWithValue }
+    { rejectWithValue, dispatch }
   ) => {
     try {
       const res = await USER_CLIENT.post(`auth/token`, formData);
-      console.log(res.data);
+      const expiresUtc = res.data.expiresUtc;
+      const timeDelta = new Date(expiresUtc).getTime() - Date.now();
+      setTimeout(() => {
+        dispatch(refreshAccessToken());
+      }, timeDelta);
       return res.data;
     } catch (err: any) {
       console.error("user login error", err);
@@ -51,12 +55,15 @@ export const refreshAccessToken = createAsyncThunk(
         refreshToken: state.auth.refreshToken,
         providerId: state.auth.account.provider?.providerId,
       });
+      const expiresUtc = res.data.expiresUtc;
+      const timeDelta = new Date(expiresUtc).getTime() - Date.now();
+      setTimeout(() => {
+        dispatch(refreshAccessToken());
+      }, timeDelta);
       return res.data;
     } catch (err: any) {
       console.error("auth refresh access token", err);
-      if (err.response.status === 401) {
-        dispatch(authLogout());
-      }
+      dispatch(authLogout());
       return rejectWithValue(err.response.data);
     }
   }

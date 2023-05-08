@@ -36,7 +36,7 @@ const RouteSwitcher = ({
         return <Component />;
       }
       console.log("gets here in isAuthenticated->isVerified");
-      return <Navigate to="/verify-email" />;
+      return <Navigate to="/verify-code" />;
     }
     if (providerInfo === null) {
       return <Navigate to={`/dashboard`} />;

@@ -115,7 +115,7 @@ const PostjobPopup = ({
               />
             </Stack>
             <TextField
-              label="Summer Internship Program"
+              placeholder="Summer Internship Program"
               variant="outlined"
               name="jobTitle"
               value={jobTitle}
@@ -132,7 +132,7 @@ const PostjobPopup = ({
                   </InputLabel>
                   <Select
                     labelId="company-name-lable-id"
-                    label="Please select"
+                    placeholder="Please select"
                     name="companyName"
                     value={companyName}
                     onChange={handleChange}
@@ -146,7 +146,7 @@ const PostjobPopup = ({
               <>
                 <label>Company*</label>
                 <TextField
-                  label="Company name"
+                  placeholder="Company name"
                   variant="outlined"
                   name="companyName"
                   value={companyName}
@@ -159,7 +159,7 @@ const PostjobPopup = ({
             <FormControl fullWidth>
               <label>Job location*</label>
               <TextField
-                label="Summber Internship Location"
+                placeholder="Summber Internship Location"
                 variant="outlined"
                 name="location"
                 value={location}
@@ -169,7 +169,7 @@ const PostjobPopup = ({
             <FormControl fullWidth>
               <label>Number of seats*</label>
               <TextField
-                label="Number of candidates looking to hire"
+                placeholder="Number of candidates looking to hire"
                 variant="outlined"
                 type="number"
                 name="seats"
@@ -187,7 +187,7 @@ const PostjobPopup = ({
                 </InputLabel>
                 <Select
                   labelId="typeofwork-label-id"
-                  label="Please select"
+                  placeholder="Please select"
                   name="typeOfWork"
                   value={typeOfWork}
                   onChange={handleChange}
@@ -200,7 +200,7 @@ const PostjobPopup = ({
             <FormControl fullWidth>
               <label>Max applications allowed</label>
               <TextField
-                label="5-10 recommended"
+                placeholder="5-10 recommended"
                 variant="outlined"
                 name="maxApplications"
                 type="number"
@@ -212,7 +212,7 @@ const PostjobPopup = ({
           <Stack paddingBottom={2}>
             <label>Skills</label>
             <TextField
-              label="Skills"
+              placeholder="Skills"
               variant="outlined"
               name="skills"
               value={skills?.join(",")}

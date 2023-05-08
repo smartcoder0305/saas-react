@@ -39,7 +39,7 @@ const Provider = ({ adjustBasename }: ProviderProps) => {
         element={<RouteSwitcher component={ResetPassword} />}
       />
       <Route
-        path="/verify-email"
+        path="/verify-code"
         element={<RouteSwitcher verifying={true} component={VerifyEmail} />}
       />
       {/** Only authorized routes */}

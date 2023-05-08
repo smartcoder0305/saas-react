@@ -122,9 +122,12 @@ export const verifyEmail = createAsyncThunk(
 
 export const sendEmailVerifyCode = createAsyncThunk(
   "auth/sendEmailVerifyCode",
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, getState }) => {
     try {
-      const res = await USER_CLIENT.post("/account/sendemailverifycode");
+      const state = getState() as RootState;
+      const res = await USER_CLIENT.post("/account/sendemailverifycode", {
+        providerId: state.provider.provider?.providerId ?? null,
+      });
       return "success";
     } catch (err: any) {
       console.error("auth email verify error", err);

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   FormControl,
   Input,
@@ -28,10 +28,11 @@ const VerifyEmail = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const currentEmail = useAppSelector(selectCurrentEmail);
+  const { verificationCode, email } = useParams();
 
   const [formData, setFormData] = useState({
-    email: "",
-    verificationCode: "",
+    email: email ?? "",
+    verificationCode: verificationCode ?? "",
   });
   const [editEmail, setEditEmail] = useState(false);
   useEffect(() => {
@@ -42,7 +43,9 @@ const VerifyEmail = () => {
     setFormData({ ...formData, [name]: value });
   };
   const verifyEmail = async () => {
-    const action = await dispatch(verify({ verificationCode }));
+    const action = await dispatch(
+      verify({ verificationCode: formData.verificationCode })
+    );
     if (action.meta.requestStatus === "fulfilled") {
       addNewAlert(dispatch, {
         type: "success",
@@ -79,7 +82,6 @@ const VerifyEmail = () => {
       });
     }
   };
-  const { email, verificationCode } = formData;
   return (
     <AuthPageLayout title="Verify Email" logo>
       <Typography variant="h1" component="h1" sx={{ mb: 3 }}>
@@ -92,10 +94,10 @@ const VerifyEmail = () => {
               onChange={handleChange}
               type="email"
               name="email"
-              value={email}
+              value={formData.email}
             />
           ) : (
-            <Typography>{email}</Typography>
+            <Typography>{formData.email}</Typography>
           )}
         </FormControl>
         {editEmail ? (
@@ -120,7 +122,7 @@ const VerifyEmail = () => {
           onChange={handleChange}
           type="text"
           name="verificationCode"
-          value={verificationCode}
+          value={formData.verificationCode}
         />
       </FormControl>
 

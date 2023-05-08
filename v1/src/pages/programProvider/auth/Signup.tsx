@@ -42,6 +42,7 @@ const Signup = () => {
     phoneNumber: "",
     providerId,
   });
+  const [isInvited, setIsInvited] = useState<boolean>(false);
   const [isValidated, setIsValidated] = useState<boolean>(false);
 
   const {
@@ -63,6 +64,7 @@ const Signup = () => {
       })
     ).then((action) => {
       if (action.meta.requestStatus === "fulfilled") {
+        setIsInvited(true);
         addNewAlert(dispatch, {
           type: "success",
           title: "Verify invite",
@@ -102,7 +104,7 @@ const Signup = () => {
     ) {
       setIsValidated(false);
     } else {
-      setIsValidated(true);
+      setIsValidated(isInvited);
     }
   };
 
